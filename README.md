@@ -61,54 +61,30 @@
 ### Пошагово выполнить каждый пункт раздела "ход работы" с описанием и примерами реализации задач
 Ход работы:
 - Произвести подготовку данных для работы с алгоритмом линейной регрессии. 10 видов данных были установлены случайным образом, и данные находились в линейной зависимости. Данные преобразуются в формат массива, чтобы их можно было вычислить напрямую при использовании умножения и сложения.
-
-```py
-
-In [ ]:
-#Import the required modules, numpy for calculation, and Matplotlib for drawing
-import numpy as np
-import matplotlib.pyplot as plt
-#This code is for jupyter Notebook only
-%matplotlib inline
-
-# define data, and change list to array
-x = [3,21,22,34,54,34,55,67,89,99]
-x = np.array(x)
-y = [2,22,24,65,79,82,55,130,150,199]
-y = np.array(y)
-
-#Show the effect of a scatter plot
-plt.scatter(x,y)
-
-```
+<img width="1260" alt="task2 1" src="https://user-images.githubusercontent.com/105643001/192551033-a6df3126-21fa-4670-b34e-cd5d7e1264b7.png">
 
 - Определите связанные функции. Функция модели: определяет модель линейной регрессии wx+b. Функция потерь: функция потерь среднеквадратичной ошибки. Функция оптимизации: метод градиентного спуска для нахождения частных производных w и b.
-### Должна ли величина loss стремиться к нулю при изменении исходных данных? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ.
+<img width="1260" alt="task2 2" src="https://user-images.githubusercontent.com/105643001/192551246-37780a9d-dd0c-41ee-98d3-48a05c82a90f.png">
 
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+- Начать итерацию
 
-```py
+- Инициализация и модель итеративной оптимизации
+<img width="1231" alt="task2 3" src="https://user-images.githubusercontent.com/105643001/192551621-5152430d-523e-4220-ab52-bb3b0f06fb03.png">
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+- На 2 итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации
+<img width="1232" alt="task2 4" src="https://user-images.githubusercontent.com/105643001/192551725-0c689eec-8055-47c7-827e-08269a931f58.png">
 
-```
+- На 3 итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации
+<img width="1232" alt="task2 5" src="https://user-images.githubusercontent.com/105643001/192551818-809e42a1-9db6-45b9-b359-2a728ea483d1.png">
+
+- На 4 итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации
+<img width="1231" alt="task2 6" src="https://user-images.githubusercontent.com/105643001/192551935-1d69a036-81bd-4644-aad1-46d33cb41ace.png">
+
+- На 5 итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации
+<img width="1232" alt="task2 7" src="https://user-images.githubusercontent.com/105643001/192552000-5bb0864b-4051-46fe-a706-519a31814114.png">
+
+- На 10000 итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации
+<img width="1260" alt="task2 8" src="https://user-images.githubusercontent.com/105643001/192552083-76687638-39c9-4495-a843-c8626cbe3ac4.png">
 
 ## Задание 3
 ### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
