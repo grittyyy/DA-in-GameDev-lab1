@@ -50,7 +50,7 @@
 ```py
 import gspread
 import numpy as np
-gs = gspread.service_account(filename='celestial-feat-364617-38d786a51576.json')
+gs = gspread.service_account(filename='unitydata-365112-fa890e9be9ae.json')
 sh = gs.open("UnitySheets")
 price = np.random.randint(2000, 10000, 11)
 mon = list(range(1, 11))
@@ -77,65 +77,118 @@ while i <= len(mon):
 
 
 ## Задание 2
-### Пошагово выполнить каждый пункт раздела "ход работы" с описанием и примерами реализации задач
+### Реализовать запись в Google-таблицу набора данных, полученных с помощью линейной регрессии из лабораторной работы № 1.
 Ход работы:
-- Произвести подготовку данных для работы с алгоритмом линейной регрессии. 10 видов данных были установлены случайным образом, и данные находились в линейной зависимости. Данные преобразуются в формат массива, чтобы их можно было вычислить напрямую при использовании умножения и сложения.
-<img width="1260" alt="task2 1" src="https://user-images.githubusercontent.com/105643001/192557182-7d8e43da-33ee-4b31-ab69-ed2656f56fc1.png">
 
-- Определите связанные функции. Функция модели: определяет модель линейной регрессии wx+b. Функция потерь: функция потерь среднеквадратичной ошибки. Функция оптимизации: метод градиентного спуска для нахождения частных производных w и b.
-<img width="1260" alt="task2 2" src="https://user-images.githubusercontent.com/105643001/192557270-1eb56b67-8f7f-44c5-91bf-c978e7906155.png">
+- Реализовал запись в Google-таблицу набора данных, полученных с помощью линейной регрессии из лабораторной работы № 1.
 
-- Начать итерацию
-
-- Инициализация и модель итеративной оптимизации
-<img width="1231" alt="task2 3" src="https://user-images.githubusercontent.com/105643001/192551621-5152430d-523e-4220-ab52-bb3b0f06fb03.png">
-
-- На 2 итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации
-<img width="1232" alt="task2 4" src="https://user-images.githubusercontent.com/105643001/192551725-0c689eec-8055-47c7-827e-08269a931f58.png">
-
-- На 3 итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации
-<img width="1232" alt="task2 5" src="https://user-images.githubusercontent.com/105643001/192551818-809e42a1-9db6-45b9-b359-2a728ea483d1.png">
-
-- На 4 итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации
-<img width="1231" alt="task2 6" src="https://user-images.githubusercontent.com/105643001/192551935-1d69a036-81bd-4644-aad1-46d33cb41ace.png">
-
-- На 5 итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации
-<img width="1232" alt="task2 7" src="https://user-images.githubusercontent.com/105643001/192552000-5bb0864b-4051-46fe-a706-519a31814114.png">
-
-- На 10000 итерации отображаются значения параметров, значения потерь и эффекты визуализации после итерации
-<img width="1260" alt="task2 8" src="https://user-images.githubusercontent.com/105643001/192552083-76687638-39c9-4495-a843-c8626cbe3ac4.png">
-
-## Задание 3
-### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
-
-- Перечисленные в этом туториале действия могут быть выполнены запуском на исполнение скрипт-файла, доступного [в репозитории](https://github.com/Den1sovDm1triy/hfss-scripting/blob/main/ScreatingSphereInAEDT.py).
-- Для запуска скрипт-файла откройте Ansys Electronics Desktop. Перейдите во вкладку [Automation] - [Run Script] - [Выберите файл с именем ScreatingSphereInAEDT.py из репозитория].
+<img width="1260" alt="image" src="https://user-images.githubusercontent.com/105643001/194902251-43125ce9-bbe0-4e50-b942-b0a08a8af94c.png">
 
 ```py
+import gspread
+import numpy as np
 
-import ScriptEnv
-ScriptEnv.Initialize("Ansoft.ElectronicsDesktop")
-oDesktop.RestoreWindow()
-oProject = oDesktop.NewProject()
-oProject.Rename("C:/Users/denisov.dv/Documents/Ansoft/SphereDIffraction.aedt", True)
-oProject.InsertDesign("HFSS", "HFSSDesign1", "HFSS Terminal Network", "")
-oDesign = oProject.SetActiveDesign("HFSSDesign1")
-oEditor = oDesign.SetActiveEditor("3D Modeler")
-oEditor.CreateSphere(
-	[
-		"NAME:SphereParameters",
-		"XCenter:="		, "0mm",
-		"YCenter:="		, "0mm",
-		"ZCenter:="		, "0mm",
-		"Radius:="		, "1.0770329614269mm"
-	], 
-)
+def loss_function(a, b, x, y):
+    num = len(x)
+    prediction = model(a, b, x)
+    return (0.5 / num) * (np.square(prediction - y)).sum()
 
+def model(a, b, x):
+    return a * x + b
+
+def optimize(a, b, x, y):
+    num = len(x)
+    prediction = model(a, b, x)
+    da = (1.0 / num) * ((prediction - y) * x).sum()
+    db = (1.0 / num) * ((prediction - y).sum())
+    a = a - Lr * da
+    b = b - Lr * db
+    return a, b
+
+def iterate(a, b, x, y, times):
+    for i in range(times):
+        a, b = optimize(a, b, x, y)
+    return a, b
+
+gc = gspread.service_account(filename='unitydata-365112-fa890e9be9ae.json')
+sh = gc.open("UnitySheets")
+
+x = [3, 21, 22, 34, 54, 34, 55, 67, 89, 99]
+x = np.array(x)
+y = [2, 22, 24, 65, 79, 82, 55, 130, 150, 199]
+y = np.array(y)
+a = np.random.rand(1)
+b = np.random.rand(1)
+Lr = 0.000001
+price = np.random.randint(2000, 10000, 11)
+mon = list(range(1, 11))
+i = 0
+
+while i <= len(mon):
+    i += 1
+    if i == 0:
+        continue
+    else:
+        a, b = iterate(a, b, x, y, 100)
+        prediction = model(a, b, x)
+        loss = loss_function(a, b, x, y)
+        tempInf = loss
+        tempInf = str(tempInf)
+        tempInf = tempInf.replace('.', ',')
+        sh.sheet1.update(('A' + str(i)), str(i))
+        sh.sheet1.update(('B' + str(i)), str(tempInf))
+        print(tempInf)
 ```
+
+<img width="1258" alt="image" src="https://user-images.githubusercontent.com/105643001/194902809-26d43609-bcac-482e-af4d-00fba31a1ce9.png">
+
+## Задание 3
+### Самостоятельно разработать сценарий воспроизведения звукового сопровождения в Unity в зависимости от изменения считанных данных в задании 2.
+
+```c#
+void Update()
+{
+        if (dataSet["Mon_" + i.ToString()] <= 200 & statusStart == false & i != dataSet.Count)
+        {
+            StartCoroutine(PlaySelectAudioGood());
+            Debug.Log(dataSet["Mon_" + i.ToString()]);
+        }
+
+        if (dataSet["Mon_" + i.ToString()] > 200 & dataSet["Mon_" + i.ToString()] < 500 & statusStart == false & i != dataSet.Count)
+        {
+            StartCoroutine(PlaySelectAudioNormal());
+            Debug.Log(dataSet["Mon_" + i.ToString()]);
+        }
+
+        if (dataSet["Mon_" + i.ToString()] >= 500 & statusStart == false & i != dataSet.Count)
+        {
+            StartCoroutine(PlaySelectAudioBad());
+            Debug.Log(dataSet["Mon_" + i.ToString()]);
+        }
+    }   
+
+    IEnumerator GoogleSheets()
+    {
+        UnityWebRequest curentResp = UnityWebRequest.Get("https://sheets.googleapis.com/v4/spreadsheets/1SwiTNXR8hpYxwXhl6UEeoc85sc5-SGpJqg-1ePr_mbE/values/Лист1?key=AIzaSyBisUEeyMSdgR-GQ0imQV8gX0NvtioNs_w");
+        yield return curentResp.SendWebRequest();
+        string rawResp = curentResp.downloadHandler.text;
+        var rawJson = JSON.Parse(rawResp);
+        foreach (var itemRawJson in rawJson["values"])
+            {
+            var parseJson = JSON.Parse(itemRawJson.ToString());
+            var selectRow = parseJson[0].AsStringList;
+            dataSet.Add(("Mon_" + selectRow[0]), float.Parse(selectRow[1]));
+        }
+    }
+```
+- Изменил значения границ
+
+<img width="1260" alt="image" src="https://user-images.githubusercontent.com/105643001/194904719-ec68ce8d-7270-4eb6-8b0b-92ff7a9de48a.png">
+
 
 ## Выводы
 
-Я написал программы вывода Hello World в консоль на Python, используя Google Colab и на Unity на языке C#, используя VS Code. Также с помощью Google Colab я познакомился с основыными операторами языка Python на примере реализации линейной регрессии.
+В ходе выполнения лабораторной работы я ознакомился с программными средствами для организции передачи данных между инструментами google, Python и Unity. Написал програму на Phyton, которая выводит значения в таблицу Google Sheets и после написал программу для Unity, которая в зависимости от этих значений оформляет звуковое сопровождение.
 
 | Plugin | README |
 | ------ | ------ |
