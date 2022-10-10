@@ -7,7 +7,7 @@
 | Задание | Выполнение | Баллы |
 | ------ | ------ | ------ |
 | Задание 1 | * | 60 |
-| Задание 2 | * | 20 |
+| Задание 2 | # | 20 |
 | Задание 3 | # | 20 |
 
 знак "*" - задание выполнено; знак "#" - задание не выполнено;
@@ -35,25 +35,8 @@
 - ✨Magic ✨
 
 ## Цель работы
-Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
+Познакомиться с программными средствами для организции передачи данных между инструментами google, Python и Unity.
 ## Задание 1
-- Зашёл на Google Collab
-- Создал пустой блокнот
-- Написал print('Hello World')
-- Запустил код
-<img width="1260" alt="py hello world" src="https://user-images.githubusercontent.com/105643001/192529165-f2dc35f6-983f-4b6b-b985-fb0a22aa5d18.png">
-
-- Сохранил файл на свой google диск
-<img width="1256" alt="saved program" src="https://user-images.githubusercontent.com/105643001/192529371-bff5c805-0291-4409-86a3-8d808e63cb33.png">
-
-- Настроил VS Code для работы с Unity
-- Создал c# скрипт в Unity
-- Написал в VS Code C# скрипт с выводом Hello World в консоль
-<img width="1260" alt="unity HelloWorld" src="https://user-images.githubusercontent.com/105643001/192533216-1fb9edc8-6f7a-4a5e-aa5b-2290e01154ba.png">
-
-- Перешёл в Unity и накинул скрипт на Camera
-- Запустил программу и сделал скриншот вывода
-<img width="1260" alt="unity HelloWorld2" src="https://user-images.githubusercontent.com/105643001/192533607-516f9af4-8d73-431a-abc1-016628acd0ee.png">
 
 
 
