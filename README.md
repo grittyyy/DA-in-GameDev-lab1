@@ -40,7 +40,7 @@
 
 <img width="1260" alt="image" src="https://user-images.githubusercontent.com/105643001/194899659-690101e3-6dc9-454a-9989-92ec5673e7a0.png">
 
-- Написал скрипт на python, который ввдодит данные об инфляции в таблицу Google Sheets
+- Написал скрипт на python, который вводит данные об инфляции в таблицу Google Sheets
 
 <img width="616" alt="image" src="https://user-images.githubusercontent.com/105643001/194900419-1d2e8625-fde9-4fd6-821f-3124265290c5.png">
 
