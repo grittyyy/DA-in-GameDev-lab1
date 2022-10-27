@@ -1,5 +1,5 @@
 # АНАЛИЗ ДАННЫХ И ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ [in GameDev]
-Отчет по лабораторной работе #1 выполнил(а):
+Отчет по лабораторной работе #3 выполнил(а):
 - Ершов Александр Николаевич
 - РИ210943
 Отметка о выполнении заданий (заполняется студентом):
@@ -35,25 +35,103 @@
 - ✨Magic ✨
 
 ## Цель работы
-Ознакомиться с основными операторами зыка Python на примере реализации линейной регрессии.
+Познакомиться с программными средствами для создания системы машинного обучения и ее интеграции в Unity.
+
 ## Задание 1
-- Зашёл на Google Collab
-- Создал пустой блокнот
-- Написал print('Hello World')
-- Запустил код
-<img width="1260" alt="py hello world" src="https://user-images.githubusercontent.com/105643001/192529165-f2dc35f6-983f-4b6b-b985-fb0a22aa5d18.png">
+- Создал новый пустой 3D проект в Unity
+- В созданный проект добавил ML Agent (добавил .json файлы из папки)
+![image](https://user-images.githubusercontent.com/105643001/198303262-167bc7d5-6e0f-4d25-bd17-40859f3fc729.png)
+- Далее запустил Anaconda Prompt
+![image](https://user-images.githubusercontent.com/105643001/198303536-4d29afb0-3560-4a6f-a17b-87fb2b261a97.png)
+- Написал серию команд для создания и активации нового ML-агента, а также для скачивания необходимых библиотек
 
-- Сохранил файл на свой google диск
-<img width="1256" alt="saved program" src="https://user-images.githubusercontent.com/105643001/192529371-bff5c805-0291-4409-86a3-8d808e63cb33.png">
+- На сцене создал куб, сферу и плоскость и подключил C# файл (RollerAgent.cs) к сфере
+![image](https://user-images.githubusercontent.com/105643001/198304933-06e74979-1524-40dd-acf1-af7a165df6d9.png)
 
-- Настроил VS Code для работы с Unity
-- Создал c# скрипт в Unity
-- Написал в VS Code C# скрипт с выводом Hello World в консоль
-<img width="1260" alt="unity HelloWorld" src="https://user-images.githubusercontent.com/105643001/192533216-1fb9edc8-6f7a-4a5e-aa5b-2290e01154ba.png">
+- В нём написал такой код
+```C#
+using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
+using Unity.MLAgents.Actuators;
 
-- Перешёл в Unity и накинул скрипт на Camera
-- Запустил программу и сделал скриншот вывода
-<img width="1260" alt="unity HelloWorld2" src="https://user-images.githubusercontent.com/105643001/192533607-516f9af4-8d73-431a-abc1-016628acd0ee.png">
+public class RollerAgent : Agent
+{
+   Rigidbody rBody;
+   void Start()
+   {
+       rBody = GetComponent<Rigidbody>();
+   }
+
+   public Transform Target;
+   public override void OnEpisodeBegin()
+   {
+       if (this.transform.localPosition.y < 0)
+       {
+           this.rBody.angularVelocity = Vector3.zero;
+           this.rBody.velocity = Vector3.zero;
+           this.transform.localPosition = new Vector3(0, 0.5f, 0);
+       }
+
+       Target.localPosition = new Vector3(Random.value * 8-4, 0.5f, Random.value * 8-4);
+   }
+   public override void CollectObservations(VectorSensor sensor)
+   {
+       sensor.AddObservation(Target.localPosition);
+       sensor.AddObservation(this.transform.localPosition);
+       sensor.AddObservation(rBody.velocity.x);
+       sensor.AddObservation(rBody.velocity.z);
+   }
+   public float forceMultiplier = 10;
+   public override void OnActionReceived(ActionBuffers actionBuffers)
+   {
+       Vector3 controlSignal = Vector3.zero;
+       controlSignal.x = actionBuffers.ContinuousActions[0];
+       controlSignal.z = actionBuffers.ContinuousActions[1];
+       rBody.AddForce(controlSignal * forceMultiplier);
+
+       float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
+
+       if(distanceToTarget < 1.42f)
+       {
+           SetReward(1.0f);
+           EndEpisode();
+       }
+       else if (this.transform.localPosition.y < 0)
+       {
+           EndEpisode();
+       }
+   }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
