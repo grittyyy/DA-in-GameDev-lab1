@@ -104,6 +104,44 @@ public class RollerAgent : Agent
    }
 }
 ```
+- Сфере добавил компоненты Rigidbody, Decision Requester и Behaviour Parametres
+![image](https://user-images.githubusercontent.com/105643001/198305953-347803cb-6c2e-4843-82fa-d68f2869f2cf.png)
+
+- Добавил файл конфигурации нейронной сети в корень проекта
+```C#
+behaviors:
+  RollerBall:
+    trainer_type: ppo
+    hyperparameters:                 
+      batch_size: 10
+      buffer_size: 100
+      learning_rate: 3.0e-4
+      beta: 5.0e-4
+      epsilon: 0.2
+      lambd: 0.99
+      num_epoch: 3
+      learning_rate_schedule: linear
+    network_settings: 
+      normalize: false
+      hidden_units: 128
+      num_layers: 2
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+    max_steps: 500000
+    time_horizon: 64
+    summary_freq: 10000
+```
+
+- Запустил работу ML агента
+![image](https://user-images.githubusercontent.com/105643001/198306586-deff9a8c-5f0b-4e6c-8825-e651fdda6ab4.png)
+https://user-images.githubusercontent.com/105643001/198306676-0a92198f-a9a7-4c9e-9a44-08fe3b550fb5.mp4
+
+
+
+
+
 
 
 
