@@ -1,5 +1,5 @@
 # АНАЛИЗ ДАННЫХ И ИСКУССТВЕННЫЙ ИНТЕЛЛЕКТ [in GameDev]
-Отчет по лабораторной работе #3 выполнил:
+Отчет по лабораторной работе #5 выполнил:
 - Ершов Александр Николаевич
 - РИ210943
 Отметка о выполнении заданий (заполняется студентом):
@@ -35,239 +35,49 @@
 - ✨Magic ✨
 
 ## Цель работы
-Познакомиться с программными средствами для создания системы машинного обучения и ее интеграции в Unity.
 
 ## Задание 1
-- Создал новый пустой 3D проект в Unity
-- В созданный проект добавил ML Agent (добавил .json файлы из папки)
-![image](https://user-images.githubusercontent.com/105643001/198303262-167bc7d5-6e0f-4d25-bd17-40859f3fc729.png)
-- Далее запустил Anaconda Prompt
-![image](https://user-images.githubusercontent.com/105643001/198303536-4d29afb0-3560-4a6f-a17b-87fb2b261a97.png)
-- Написал серию команд для создания и активации нового ML-агента, а также для скачивания необходимых библиотек
 
-- На сцене создал куб, сферу и плоскость и подключил C# файл (RollerAgent.cs) к сфере
-![image](https://user-images.githubusercontent.com/105643001/198304933-06e74979-1524-40dd-acf1-af7a165df6d9.png)
+Создал новый проект в Unity и добавил пустой объект 'perceptron'
 
-- В нём написал такой код
-```C#
-using UnityEngine;
-using Unity.MLAgents;
-using Unity.MLAgents.Sensors;
-using Unity.MLAgents.Actuators;
+![image](https://user-images.githubusercontent.com/105643001/204279686-caebbaf8-b693-452c-b194-d3c05ac6eedf.png)
 
-public class RollerAgent : Agent
-{
-   Rigidbody rBody;
-   void Start()
-   {
-       rBody = GetComponent<Rigidbody>();
-   }
+![image](https://user-images.githubusercontent.com/105643001/204280354-b01c1c82-10c5-476a-b85c-12a06d92fe6e.png)
 
-   public Transform Target;
-   public override void OnEpisodeBegin()
-   {
-       if (this.transform.localPosition.y < 0)
-       {
-           this.rBody.angularVelocity = Vector3.zero;
-           this.rBody.velocity = Vector3.zero;
-           this.transform.localPosition = new Vector3(0, 0.5f, 0);
-       }
+![image](https://user-images.githubusercontent.com/105643001/204282018-15237f0d-4c82-4568-89cf-924b7f65094f.png)
 
-       Target.localPosition = new Vector3(Random.value * 8-4, 0.5f, Random.value * 8-4);
-   }
-   public override void CollectObservations(VectorSensor sensor)
-   {
-       sensor.AddObservation(Target.localPosition);
-       sensor.AddObservation(this.transform.localPosition);
-       sensor.AddObservation(rBody.velocity.x);
-       sensor.AddObservation(rBody.velocity.z);
-   }
-   public float forceMultiplier = 10;
-   public override void OnActionReceived(ActionBuffers actionBuffers)
-   {
-       Vector3 controlSignal = Vector3.zero;
-       controlSignal.x = actionBuffers.ContinuousActions[0];
-       controlSignal.z = actionBuffers.ContinuousActions[1];
-       rBody.AddForce(controlSignal * forceMultiplier);
+![image](https://user-images.githubusercontent.com/105643001/204282940-dcc5df3a-3ab1-440b-87e7-af316a011a02.png)
 
-       float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
+![image](https://user-images.githubusercontent.com/105643001/204283025-e5b31de3-91a1-4784-8b52-9b78963431a0.png)
 
-       if(distanceToTarget < 1.42f)
-       {
-           SetReward(1.0f);
-           EndEpisode();
-       }
-       else if (this.transform.localPosition.y < 0)
-       {
-           EndEpisode();
-       }
-   }
-}
-```
-- Сфере добавил компоненты Rigidbody, Decision Requester и Behaviour Parametres
-![image](https://user-images.githubusercontent.com/105643001/198305953-347803cb-6c2e-4843-82fa-d68f2869f2cf.png)
+![image](https://user-images.githubusercontent.com/105643001/204283064-5d9056cb-7425-46aa-88da-f490b5485d4a.png)
 
-- Добавил файл конфигурации нейронной сети в корень проекта
-```C#
-behaviors:
-  RollerBall:
-    trainer_type: ppo
-    hyperparameters:                 
-      batch_size: 10
-      buffer_size: 100
-      learning_rate: 3.0e-4
-      beta: 5.0e-4
-      epsilon: 0.2
-      lambd: 0.99
-      num_epoch: 3
-      learning_rate_schedule: linear
-    network_settings: 
-      normalize: false
-      hidden_units: 128
-      num_layers: 2
-    reward_signals:
-      extrinsic:
-        gamma: 0.99
-        strength: 1.0
-    max_steps: 500000
-    time_horizon: 64
-    summary_freq: 10000
-```
+- AND
 
-- Запустил работу ML агента
+![image](https://user-images.githubusercontent.com/105643001/204286533-5b659dc8-80b5-482d-9b37-9a2136ef2790.png)
 
-![image](https://user-images.githubusercontent.com/105643001/198307067-ad8135cf-0ba2-4eec-b286-61a55495f622.png)
+![image](https://user-images.githubusercontent.com/105643001/204286580-78125417-5358-462a-936f-7758944797b9.png)
 
-- Наблюдаем за результатом
+![image](https://user-images.githubusercontent.com/105643001/204286641-38f86b12-19d0-4687-886a-41ebf2e573c4.png)
+
+- NAND
+
+![image](https://user-images.githubusercontent.com/105643001/204286923-3bab89dc-0ed2-438d-ba1e-4b6c9890a40c.png)
+
+- XOR
+
+![image](https://user-images.githubusercontent.com/105643001/204288418-6f6dcb90-9e3c-466f-ad02-12d2e281c771.png)
 
 
-https://user-images.githubusercontent.com/105643001/198307540-3b0fde7e-02b5-4b17-922e-7b7e5ec22450.mp4
-
-- Создал 3 копии
 
 
-https://user-images.githubusercontent.com/105643001/198321874-3f011fbf-3e05-45a3-8fa6-4f2c74f9e616.mp4
-
-- Создал 9 копий
-
-
-https://user-images.githubusercontent.com/105643001/198323785-f650166a-3f4c-421c-b790-d764df38ddea.mp4
-
-- Создал 27 копий
-
-
-https://user-images.githubusercontent.com/105643001/198327255-affad864-9677-4e92-a7c2-e1e0e8b825bf.mp4
-
-- После завершения обучения получаил это:
-
-
-https://user-images.githubusercontent.com/105643001/198330318-ecac8455-65b8-4502-8235-ddcec49534e2.mp4
-
-- Выводы: после того, как я обучил модель, шар начал непосредственно двигаться к кубу более плавно, перестал падать за пределы плоскости
 
 ## Задание 2
-```C#
-behaviors:
-  RollerBall:                        #Имя агента
-    trainer_type: ppo                #Устанавливаем режим обучения (Proximal Policy Optimization).
-    hyperparameters:                 #Задаются гиперпараметры.
-      batch_size: 10                 #Количество опытов на каждой итерации для обновления экстремумов функции.
-      buffer_size: 100               #Количество опыта, которое нужно набрать перед обновлением модели.
-      learning_rate: 3.0e-4          #Устанавливает шаг обучения (начальная скорость).
-      beta: 5.0e-4                   #Отвечает за случайность действия, повышая разнообразие и иследованность пространства обучения.
-      epsilon: 0.2                   #Порог расхождений между старой и новой политиками при обновлении.
-      lambd: 0.99                    #Определяет авторитетность оценок значений во времени. Чем выше значение, тем более авторитетен набор предыдущих оценок.
-      num_epoch: 3                   #Количество проходов через буфер опыта, при выполнении оптимизации.
-      learning_rate_schedule: linear #Определяет, как скорость обучения изменяется с течением времени, линейно уменьшает скорость.
-    network_settings:                #Определяет сетевые настройки.
-      normalize: false               #Отключается нормализация входных данных.
-      hidden_units: 128              #Количество нейронов в скрытых слоях сети.
-      num_layers: 2                  #Количество скрытых слоев для размещения нейронов.
-    reward_signals:                  #Задает сигналы о вознаграждении.
-      extrinsic:
-        gamma: 0.99                  #Коэффициент скидки для будущих вознаграждений.
-        strength: 1.0                #Шаг для learning_rate.
-    max_steps: 500000                #Общее количество шагов, которые должны быть выполнены в среде до завершения обучения.
-    time_horizon: 64                 #Количество циклов ML агента, хранящихся в буфере до ввода в модель.
-    summary_freq: 10000              #Количество опыта, который необходимо собрать перед созданием и отображением статистики.
-```
-
-- Decision Requester - запрашивает решение через регулярные промежутки времени и обрабатывает чередование между ними во время обучения.
-
-- Behavior Parameters - определяет принятие объектом решений, в него указывается какой тип поведения будет использоваться: уже обученная модель или удалённый процесс обучения.
 
 ## Задание 3
-- Создал второй куб на сцене
-- Изменил код скрипта
-```C#
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Unity.MLAgents;
-using Unity.MLAgents.Sensors;
-using Unity.MLAgents.Actuators;
-
-public class RollerAgent : Agent
-{
-    Rigidbody rBody;
-    void Start()
-    {
-        rBody = GetComponent<Rigidbody>();
-    }
-
-    public Transform Target;
-    public Transform Target2;
-    public override void OnEpisodeBegin()
-    {
-        if (this.transform.localPosition.y < 0)
-        {
-            this.rBody.angularVelocity = Vector3.zero;
-            this.rBody.velocity = Vector3.zero;
-            this.transform.localPosition = new Vector3(0, 0.5f, 0);
-        }
-
-        Target.localPosition = new Vector3(Random.value * 8 - 4, 0.5f, Random.value * 8 - 4);
-        Target2.localPosition = new Vector3(Random.value * 8 - 4, 0.5f, Random.value * 8 - 4); // Добавил строку
-    }
-    public override void CollectObservations(VectorSensor sensor)
-    {
-        sensor.AddObservation(Target2.localPosition); 
-        sensor.AddObservation(this.transform.localPosition);
-        sensor.AddObservation(rBody.velocity.x);
-        sensor.AddObservation(rBody.velocity.z);
-    }
-    public float forceMultiplier = 10;
-    public override void OnActionReceived(ActionBuffers actionBuffers)
-    {
-        Vector3 controlSignal = Vector3.zero;
-        controlSignal.x = actionBuffers.ContinuousActions[0];
-        controlSignal.z = actionBuffers.ContinuousActions[1];
-        rBody.AddForce(controlSignal * forceMultiplier);
-
-        float distanceToTarget = Vector3.Distance(this.transform.localPosition, Target.localPosition);
-        float distanceToTarget2 = Vector3.Distance(this.transform.localPosition, Target2.localPosition); // Добавил строку
-
-        if (distanceToTarget < 1.42f || distanceToTarget2 < 1.42f)
-        {
-            SetReward(1.0f);
-            EndEpisode();
-        }
-        else if (this.transform.localPosition.y < 0)
-        {
-            EndEpisode();
-        }
-    }
-}
-```
-- Наблюдаем результат
-
-
-https://user-images.githubusercontent.com/105643001/198334758-a72ddbd2-0997-48f4-b842-19d6c1836485.mp4
 
 ## Выводы
-- Игровой баланс в играх - это субъективное «равновесие» между персонажами, командами, тактиками игры и другими игровыми объектами. Игровой баланс является одним из требований к «честности» правил.
 
-- Относительно простой нейронной сети достаточно, чтобы достичь высокой эффективности игры против игроков и традиционного игрового ИИ. Таких агентов можно использовать различными способами, например, для тренировки новых игроков или для выявления неожиданных стратегий. Так же системы машинного обучения могут использоваться для того, чтобы выявить дисбаланс в игре.
 
 
 
