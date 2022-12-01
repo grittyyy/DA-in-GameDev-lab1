@@ -68,9 +68,13 @@
 ![image](https://user-images.githubusercontent.com/105643001/205073104-d248d828-45a0-4a72-a20c-1b1195eb531a.png)
 
 Изменил переменные в файле Economic.yaml
+
 batch_size: 2000
+
 epsilon: 0.5
+
 num_layers: 5
+
 И получил такие графики:
 
 ![image](https://user-images.githubusercontent.com/105643001/205094349-21a182d9-5f7c-4b25-a8c4-f68c278ad062.png)
