@@ -42,8 +42,11 @@
 
 ## Задание 1
 
+Открыл проект Unity скачанный из методички.
+
 ![image](https://user-images.githubusercontent.com/105643001/205067776-4759a06d-256c-425c-878f-e597cba5557b.png)
 
+Запустил и разобрался с его работой
 
 ![image](https://user-images.githubusercontent.com/105643001/205067514-094450bc-0c6c-40b4-9512-10842b15a96e.png)
 
